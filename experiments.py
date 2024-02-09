@@ -149,8 +149,6 @@ def update(dt):
                 if not((im[i][j][0] < 170) and (im[i][j][1] > 140) and (im[i][j][2] > 140)):
                     im[i][j] = [0,0,0]
         cv.imwrite(f"screenshots/screen_{env.unwrapped.step_count / 10}.png", im)
-        cv.imshow('window', im)
-        cv.waitKey(0)
     #    img_gray = im.convert('L')
     #    edges = img.filter(ImageFilter.Kernel((3, 3), (-1, -1, -1,-1, 8, -1, -1, -1, -1), 1, 0))                          
     #    edges.save(f"screen_{env.unwrapped.step_count / 10}.png")
