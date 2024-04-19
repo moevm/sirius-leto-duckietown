@@ -1,3 +1,4 @@
+from graph.vertex_dict import vertex_dict
 class Node:
     def __init__(self, name, position):
         self.name = name
@@ -34,13 +35,6 @@ class Graph:
         new_path.append(self.path[-1])
         return [n.name for n in new_path]
 
-vertex_dict = {
-    '1': [0, 0],
-    '2': [1, 0],
-    '3': [2, 0],
-    'V1': [0.5, 0],
-    'V2': [1.5, 0],
-}
 if __name__ == '__main__':
     graph = Graph()
 
@@ -52,5 +46,17 @@ if __name__ == '__main__':
 
     graph.set_path(['1', '2', '3'])
 
-    print("Исходный путь:", graph.path)
+    #print("Исходный путь:", graph.path[1])
     print("Путь с подвершинами:", graph.insert_sub_vertices())
+
+
+def add_vertices(path):
+    graph = Graph()
+
+    for name, position in vertex_dict.items():
+        node = Node(name, position)
+        graph.node_dict[name] = node
+# TODO добавить все подвершины
+    graph.add_sub_vertices('1', '3', ['V1', 'V2'])
+    graph.set_path(path)
+    return graph.insert_sub_vertices()

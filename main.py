@@ -21,13 +21,13 @@ from gym_duckietown.envs import DuckietownEnv
 
 
 # Модули наших рук
+from graph.compose_full_path import compose_full_path
 from detector.moments import get_action, get_contour_equation
 from wrappers import small_right_turn
 from wrappers import small_left_turn
 from wrappers import wide_right_turn
 from wrappers import wide_left_turn
 from detector.detector_by_bgr import detector_by_bgr
-from graph.new_d import dijkstra_file as alg_d
 parser = argparse.ArgumentParser()
 #parser.add_argument("--env-name", default=None)
 #Duckietown-udem1-v0'
@@ -97,7 +97,7 @@ env.unwrapped.window.push_handlers(key_handler)
 
 action = np.array([0.0, 0.0])
 forward_counter = 0
-_, path = alg_d('graph/data.txt', 3, 0)
+
 
 
 def check_vertexes(pos):
@@ -121,7 +121,6 @@ def update(dt):
     min_rad = 0.08
     global action
     global forward_counter
-    global path
     
     #action = np.array([0.0, 0.0])
 
@@ -194,37 +193,14 @@ def update(dt):
 
         if coords[0] != 0 and coords[0] is not None:
             cv2.circle(im, coords, 5, (255, 255, 255), -1)
-        #im = detector(im, [0, 100, 100], [80, 250, 250], True, [150, 100, 250])
 
 
+
+
+
+
+        print(compose_full_path())
         
-
-
-        #im, corners = detect_apriltags(im, False)
-
-
-
-        #if ((im[474][1][0] == 150) and (im[474][1][1] == 50) and (im[474][1][2] == 250)):
-        # if np.array_equal(im[474][1], [150,50,250]):
-        #     print('y')
-        #     action[0] = 1
-        #     action[1] = 1
-        #     forward_counter = 3
-        # elif np.array_equal(im[415][70], [150,50,250]):
-        #     print('x')
-        #     action[0] = 1
-        #     action[1] = 1
-        #     forward_counter = 3
-
-
-
-
-        #Цвет не однороден
-        #if np.array_equal(im[308][389], [61,52,182]):
-        #   print('true')
-        
-
-
 
 
 
@@ -232,28 +208,11 @@ def update(dt):
         x_max = im.shape[1]
         obr = im[int(y_max/3):y_max]
         cv2.imwrite(f"screenshots/frame_{int(env.unwrapped.step_count / 10)}.png", im)
-        #cv2.imwrite(f"screenshots/frame_{int(env.unwrapped.step_count / 10)}_1.png", obr)
+        
     if forward_counter > 0:
         forward_counter -= 1
         action[0] = 1
         action[1] = 1
-    #print("step_count = %s, reward=%.3f" % (env.unwrapped.step_count, reward))
-
-    #print(check_vertexes(env.cur_pos))
-
-    #print(env.cur_pos)
-    
-    #env.cur_pos = [1,1,1]
-
-        #print(im[474][1][0], im[474][1][1], im[474][1][2])
-
-
-    
-        
-
-        
-            
-    
 
 
 
@@ -280,4 +239,3 @@ env.close()
 
 
 # def compute():
-#     _, path = alg_d('data.txt', 3, 0)

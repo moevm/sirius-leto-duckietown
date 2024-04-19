@@ -30,7 +30,7 @@ def dijkstra(graph, start, end):
 
 
 
-def dijkstra_file(name, start, end):
+def find_path(name, start, end):
     graph, num_vertices = read_file(name)
     distances = [float('inf')] * num_vertices
     distances[start] = 0
